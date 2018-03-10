@@ -26,7 +26,8 @@ chmod ugo+x myScript.sh
 enter_alt_charset_mode=\E[11m
 exit_alt_charset_mode=\E[10m 
 
-
+echo -e "\E(0"
+echo -e "\E(B"
 
 
 
