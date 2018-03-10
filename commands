@@ -23,6 +23,9 @@ tput sgr0
 infocmp -1L linux
 chmod ugo+x myScript.sh 
 
+enter_alt_charset_mode=\E[11m
+exit_alt_charset_mode=\E[10m 
+
 
 
 
