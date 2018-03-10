@@ -1,0 +1,33 @@
+clear_screen=\E[H\E[J
+cursor_address=\E[%i%p1%d;%p2%dH
+set_a_background=\E[4%p1%dm
+set_a_foreground=\E[3%p1%dm
+cursor_invisible=\E[?25l\E[?1c
+cursor_visible=\E[?25h\E[?8c
+
+
+echo -e "\E[H\E[J"
+echo -e "\E[5;10f"
+echo -e "\E[40m"
+echo -e "\E[0;31m"
+echo "GRIGORIY"
+echo -e "\E[6;8f"
+echo -e "\E[47m"
+echo -e "\E[0;32m"
+echo "IP - 614"
+echo -e "\E[10;1f"
+tput sgr0 
+
+
+
+infocmp -1L linux
+chmod ugo+x myScript.sh 
+
+
+
+
+
+
+
+
+
