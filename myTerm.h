@@ -8,7 +8,7 @@
 #define BG_COLOR "\E[4%dm"
 #define FG_COLOR "\E[1;3%dm"
 
-enum COLOR {RED = 1, GREEN = 2, YELLOW = 3, DARK_BLUE = 4, PURPLE = 5, BLUE = 6, WHITE = 7};
+enum COLOR {RED = 1, GREEN = 2, YELLOW = 3, DARK_BLUE = 4, PURPLE = 5, BLUE = 6, WHITE = 7, DEFAULT = 9};
 
 int mt_clrscr ();
 int mt_gotoXY (int , int );
