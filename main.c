@@ -1,14 +1,16 @@
 #include "header.h"
 #include "myTerm.h"
-
+#include "myBigChars.h"
 void showMenu(int x, int y) {
 	mt_gotoXY(x, y);
 	printf("[1]LAB 3");
 	mt_gotoXY(x + 1, y);
 	printf("[2]LAB 2");
 	mt_gotoXY(x + 2, y);
-	printf("[3]EXITE");
+	printf("[3]LAB 4");
 	mt_gotoXY(x + 3, y);
+	printf("[4]EXITE");
+	mt_gotoXY(x + 4, y);
 	printf(">>>");
 }
 
@@ -49,7 +51,7 @@ int main() {
 				for (i = 0; i < N_MEM; i++) {
 					mt_setbgColor(WHITE);
 					mt_setfgColor(PURPLE);
-					printf("0x%x ", arrMemory[i]);
+					printf("+%04X ", arrMemory[i]);
 					if (count % 10 == 0) printf("\n");
 					count++;
 				}
@@ -60,7 +62,7 @@ int main() {
 				mt_setfgColor(WHITE);
 				printf("\nFLAGS: OVERFLOW: %d OUTOFMEMORY: %d\n", memoryFlag, commandFlag);
 				printf(">BEFORE ENCODE / DECODE< COMMAND: %d OPERAND: %d VALUE: %d\n", command, operand, result);
-				command = 77; operand = 3;
+				command = 61; operand = 3;
 				printf(">DATA INPUT< COMMAND: %d OPERAND: %d\n", command, operand);
 				mt_setbgColor(WHITE);
 				mt_setfgColor(PURPLE);
@@ -95,7 +97,7 @@ int main() {
 				printf("\n\n");
 				for (i = 0; i < N_MEM; i++) {
 					mt_setfgColor(PURPLE);
-					printf("0x%x ", arrMemory[i]);
+					printf("+%X ", arrMemory[i]);
 					if (count % 10 == 0) printf("\n");
 					count++;
 				}
@@ -106,6 +108,59 @@ int main() {
 			}
 			break;
 			case 3:
+				mt_clrscr();
+				int i, k = 2, y =2;
+				bc_box(1, 1, 12, 62);
+				mt_gotoXY(1, 29);
+				printf("MEMORY");
+				mt_gotoXY(2,2);
+				for (i = 1; i <= N_MEM; i++) {
+					printf("+%X ", arrMemory[i - 1]);
+					if (i % 10 == 0 && i != 0) {k++; mt_gotoXY(k, 2);}				
+				}
+
+				bc_box(13, 1, 18, 46);
+				mt_gotoXY(13, 22);
+				printf("CHAR");
+				BIG[0] = 0;
+				BIG[1] = 0;
+				char buffer[20];
+				sprintf(buffer, "+%04X", result);
+				for (i = 0; i < 5; i++) {
+					chooseBig(BIG, buffer[i]);
+					bc_printBigChar(BIG, 15, y, PURPLE, WHITE);
+					y += 9;
+					
+				}
+								
+				//mt_gotoXY();
+
+				bc_box(1, 63, 3, 18);
+				mt_gotoXY(1, 67);
+				printf("ACCUMULATOR");
+
+				bc_box (4, 63, 3, 18);
+				mt_gotoXY(4, 69);
+				printf("COUNTER");
+
+				bc_box (7, 63, 3, 18);
+				mt_gotoXY(7, 68);
+				printf("OPERATION");
+
+				bc_box (10, 63, 3, 18);
+				mt_gotoXY(10, 70);
+				printf("FLAGS");
+
+				bc_box (13, 47, 18, 34);
+				mt_gotoXY(13, 62);
+				printf("KEYS");
+				scanf("%d", &helpme);
+
+			break;
+			case 4:
+				mt_setbgColor(DEFAULT);
+				mt_setfgColor(DEFAULT);
+				mt_clrscr();
 				return EXIT_SUCCESS;
 			break;
 
