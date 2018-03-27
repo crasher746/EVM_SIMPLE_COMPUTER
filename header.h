@@ -14,6 +14,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int memoryPointer, operand, command, accumValue, opCounter; 
+
 int arrMemory[N_MEM];
 int reg;
 int arrCommand[N_COM];

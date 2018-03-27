@@ -4,14 +4,14 @@ int sc_memoryInit() {
 	int i;
 	for (i = 0; i < N_MEM; i++)
 		arrMemory[i] = 0;
-	printf(">>>Success MEMORY INIT\n");
+	//printf(">>>Success MEMORY INIT\n");
 	return 0;
 }
 int sc_memorySet(int address, int value) {
 	if (address < N_MEM) {
 		arrMemory[address] = value;
 		sc_regSet(OVERFLOW, 0);
-		printf(">>>Success MEMORY SET\n");
+		//printf(">>>Success MEMORY SET\n");
 		return 0;
 	}
 	else {
@@ -31,7 +31,7 @@ int sc_memoryGet(int address, int *value) {
 	if (address < N_MEM) {
 		*value = arrMemory[address];
 		sc_regSet(OVERFLOW, 0);
-		printf(">>>Success MEMORY GET\n");
+		//printf(">>>Success MEMORY GET\n");
 		return 0;
 	}
 	else {
@@ -43,7 +43,7 @@ int sc_memorySave(char *filename) {
 	FILE *output;
 	output = fopen(filename, "wb");
 	fwrite(arrMemory, N_MEM, sizeof(int), output);
-	printf(">>>Success SAVE\n");
+	//printf(">>>Success SAVE\n");
 	fclose(output);
 	return 0;
 }
@@ -54,16 +54,16 @@ int sc_memoryLoad(char *filename) {
 		fread(arrMemory, N_MEM, sizeof(int), input);
 	}
 	else {
-		printf("Couldn't open file: %s\n", filename);
+		//printf("Couldn't open file: %s\n", filename);
 		return -1;
 	}
-	printf(">>>Success LOAD\n");
+	//printf(">>>Success LOAD\n");
 	fclose(input);
 	return 0;
 }
 int sc_regInit() {
 	reg = 0;//VAR storiable flags
-	printf(">>>Success REG INIT\n");
+	//printf(">>>Success REG INIT\n");
 	return 0;
 }
 int sc_regSet(int digNum, int value) {
@@ -79,10 +79,10 @@ int sc_regSet(int digNum, int value) {
 	return 0;
 }
 int sc_regGet(int digNum, int *value) {
-	if ((digNum < 1) || (digNum > 2)) {printf(">>>FAIL REG GET %d", value); return -1;}
+	if ((digNum < 1) || (digNum > 2)) return -1;
 	else {
 		*value = (reg >> (digNum - 1)) & 0x1; //to catch value of FLAG
-		printf(">>>Success REG GET\n");
+		//printf(">>>Success REG GET\n");
 		return 0;
 	}
 }
@@ -95,7 +95,7 @@ int sc_commandEncode (int command, int operand, int *value) {
 		if (command == arrCommand[i]) {
 				*value = (command << 8) | (operand & ENCODE);
 				sc_regSet(WRONGCOMMAND, 0);				
-				printf(">>>Success ENCODE\n");
+				//printf(">>>Success ENCODE\n");
 				return 0;
 			}		
 	}
@@ -107,12 +107,12 @@ int sc_commandEncode (int command, int operand, int *value) {
 int sc_commandDecode (int value, int *command, int *operand) {
 	if ((value == NULL) || (command == NULL) || (operand == NULL)) {
 		sc_regSet(WRONGCOMMAND, 1);
-		printf(">>>NOT DECODE\n");
+		//printf(">>>NOT DECODE\n");
 		return -1;	
 	}
 	*operand = value & ENCODE;
 	*command = value >> 8;
-	printf(">>>Success DECODE\n");
+	//printf(">>>Success DECODE\n");
 	return 0;
 	
 }
