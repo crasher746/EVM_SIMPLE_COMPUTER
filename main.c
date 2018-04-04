@@ -1,13 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/time.h>
+
 #include "header.h"
 #include "myTerm.h"
 #include "myBigChars.h"
 #include "myDisplay.h"
+#include "myReadkey.h"
+#include "input.h"
 
 int main() {
 	int value = 0, i = 0, count = 1, memoryFlag = 0, commandFlag = 0;
 	int command = 0, operand = 0, result = 0, helpme;
 	char* name = "out.dat";
 	int choice = 0;
+
+	enum KEY key = KEY_BLANK;
+	flag_key = 0;
+	flag_ign = 0;
+	accumValue = 0;
+	opCounter = 0;
+
 	while (1) {
 		mt_clrscr();
 		mt_gotoXY(1, 1);		
@@ -17,20 +32,49 @@ int main() {
 		scanf("%d", &choice);
 		switch (choice) {
 			case 1:
-				mt_clrscr();
-				mt_gotoXY(1, 1);				
-				sc_regInit();
+				mt_clrscr();				
 				sc_memoryInit();
-				arrMemory[0] = 0x3D07;
-								
+				sc_regInit();
+				termInit();
 				
-				displayMemory();
-				displayAccumulator();
-				displayCounter();
-				displayOperation();
-				displayFlags();
-				displayBigChar();
-				displayMenu();
+				showFull();
+
+				while (key != KEY_QUIT) {
+					rk_readKey(&key);
+					
+
+					if (key == KEY_STEP) {
+						sc_regSet(ISRUN, 0);
+						flag_key = 0;
+					}
+					if (!flag_key) {
+						if (key == KEY_RUN) {
+							sc_regSet(ISRUN, 1);
+							sc_regSet(IGNOREFLAG, 0);						
+						}
+						sc_regGet(ISRUN, &flag_key);
+						
+						if (key == KEY_RIGHT) if (memoryPointer < 99) ++memoryPointer;
+						if (key == KEY_LEFT) if (memoryPointer >  0) --memoryPointer;
+						if (key == KEY_UP) if (memoryPointer - 10 >=  0) memoryPointer -= 10;
+						if (key == KEY_DOWN) if (memoryPointer + 10 < 100) memoryPointer += 10;
+
+						if (key == KEY_F5) inputAccum();
+						if (key == KEY_F6) inputCounter();
+						if (key == KEY_EDIT) inputMemory();
+
+						if (key == KEY_LOAD) sc_memoryLoad("out.dat");
+						if (key == KEY_SAVE) sc_memorySave("out.dat");
+
+						if (key == KEY_RESET) {
+							sc_memoryInit();
+							sc_regInit();
+							showFull();
+						}
+
+						showFull();
+					}
+				}
 				
 				/*int i, k = 2, y =2;
 				bc_box(1, 1, 12, 62);
@@ -96,8 +140,8 @@ int main() {
 				bc_box (13, 47, 18, 34);
 				mt_gotoXY(13, 62);
 				printf("KEYS");
-				mt_gotoXY(16, 48);*/
-				scanf("%d", &helpme);
+				mt_gotoXY(16, 48);
+				scanf("%d", &helpme);*/
 
 			break;
 			case 2:
