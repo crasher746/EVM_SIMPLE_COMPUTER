@@ -9,5 +9,7 @@ void displayFlags();
 void displayBigChar();
 void displayMenu();
 void showMenu(int, int);
+void showFull();
+void reset();
 
 #endif

@@ -43,7 +43,7 @@ int bc_printBigChar (int big[2], int x, int y, enum COLOR fgColor, enum COLOR bg
 	mt_setbgColor(bgColor);
 
 	for (i = 0; i < 2; i++) {
-		BigBuffer = big[i];
+		BigBuffer = big[i] >> (j * 8);
 		
 		for (j = 0; j < 4; j++) {
 			BigBuffer = big[i] >> (j * 8);
@@ -51,17 +51,19 @@ int bc_printBigChar (int big[2], int x, int y, enum COLOR fgColor, enum COLOR bg
 			
 			for (k = 0; k < 8; k++) {
 				bitBuffer = (buffer & (1 << k)) >> k;
-				if (bitBuffer != 0) {
+				if (bitBuffer == 1) {
 					str[k] = 'a';
 				}
 				else {
 					str[k] = ' ';
 				}
+				mt_gotoXY(x + (i * 4) + j, y);
+				bc_printA(str);
 			}
-			mt_gotoXY(x + (i * 4) + j, y);
-			bc_printA(str);
+			
 		}
 	}
+	mt_gotoXY(25, 1);
 	return 0;
 }
 
