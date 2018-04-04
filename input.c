@@ -25,8 +25,14 @@ void inputMemory() {
 	int com = 0, oper = 0, val;
 	sc_memoryGet(memoryPointer, &val);
 	sc_commandDecode(val, &com, &oper);
-	printf("ENCODE: ");
-	scanf("%d %d", &com, &oper);
+	printf("COMMAND ");
+	scanf("%d", &com);
+	mt_gotoXY(23, 51);
+	printf("                     ");
+	mt_gotoXY(23, 51);
+	displayMenu();
+	printf("OPERAND ");
+	scanf("%d", &oper);
 	sc_commandEncode(com, oper, &val);
 	sc_memorySet(memoryPointer, val);
 }
@@ -37,6 +43,6 @@ void clearInput() {
 	mt_gotoXY (25, 1);
 	for (i = 0; i < 80; ++i)
 	write (term, " ", 1);
-	mt_gotoXY (25, 1);
+	mt_gotoXY (23, 51);
 	close (term);
 }
