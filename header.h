@@ -6,16 +6,21 @@
 #define N_COM 38
 
 #define OVERFLOW 1 
-#define WRONGCOMMAND 2 
+#define WRONGCOMMAND 2
+#define ZEROFLAG 3
+#define IGNOREFLAG 4
+#define ISRUN 5
+#define LIMIT 6  
 
 #define ENCODE 127
 //#define clear() printf('\nE033ff')
 
+#include <sys/time.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 int memoryPointer, operand, command, accumValue, opCounter; 
-
+int flag_key, flag_ign;
 int arrMemory[N_MEM];
 int reg;
 int arrCommand[N_COM];
