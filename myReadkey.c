@@ -39,12 +39,11 @@ int rk_myTermRegime(struct termios const *currentState, int regime, int vtime, i
 }
 
 int rk_readKey(enum KEY *key) {
-	int term;
 	char buffer;
 	
 	struct termios termState = term_state;
 	rk_myTermRegime(&termState, 0, 0, 1, 0, 1);
-	read(term, &buffer, 1);
+	read(1, &buffer, 1);
 
 	switch(buffer) {
 	case 'q':
@@ -69,8 +68,8 @@ int rk_readKey(enum KEY *key) {
 		*key = KEY_EDIT;
 		break;
 	case '\E':
-		read(term, &buffer, 1);
-		read(term, &buffer, 1);
+		read(1, &buffer, 1);
+		read(1, &buffer, 1);
 		switch(buffer) {
 		case 65:
 			*key = KEY_UP;
@@ -85,13 +84,13 @@ int rk_readKey(enum KEY *key) {
 			*key = KEY_LEFT;
 			break;		
 		case '1':
-			read(term, &buffer, 1);
+			read(1, &buffer, 1);
 			if (buffer == '5') {
-				read(term, &buffer, 1);
+				read(1, &buffer, 1);
 				if (buffer == '~') *key = KEY_F5;
 			}
 			if (buffer == '7') {
-				read(term, &buffer, 1);
+				read(1, &buffer, 1);
 				if (buffer == '~') *key = KEY_F6;
 			}
 			break;
@@ -105,7 +104,6 @@ int rk_readKey(enum KEY *key) {
 		break;
 	}
 	rk_myTermRegime(&termState, 1, 1, 1, 1, 1);
-	close(term);
 	
 	return 0;
 }
