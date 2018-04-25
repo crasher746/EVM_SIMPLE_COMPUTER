@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <signal.h>
+#include <time.h>
 #include <sys/time.h>
 
 #include "header.h"
@@ -10,6 +12,7 @@
 #include "myDisplay.h"
 #include "myReadkey.h"
 #include "input.h"
+#include "myTimer.h"
 
 int main() {
 	int value = 0, i = 0, count = 1, memoryFlag = 0, commandFlag = 0;
@@ -17,11 +20,16 @@ int main() {
 	char* name = "out.dat";
 	int choice = 0;
 
+	signal (SIGALRM, signalHandler);
+	signal (SIGUSR1, reset);
+
 	enum KEY key = KEY_BLANK;
 	flag_key = 0;
 	flag_ign = 0;
 	accumValue = 0;
 	opCounter = 0;
+	
+	setTimerValues(1, 0);
 
 	while (1) {
 		mt_clrscr();
@@ -44,8 +52,7 @@ int main() {
 					
 
 					if (key == KEY_STEP) {
-						sc_regSet(ISRUN, 0);
-						flag_key = 0;
+						
 					}
 					if (!flag_key) {
 						if (key == KEY_RUN) {
@@ -53,6 +60,10 @@ int main() {
 							sc_regSet(IGNOREFLAG, 0);						
 						}
 						sc_regGet(ISRUN, &flag_key);
+
+						if (flag_key) {
+							timerStart();				
+						}
 						
 						if (key == KEY_RIGHT) if (memoryPointer < 99) ++memoryPointer;
 						if (key == KEY_LEFT) if (memoryPointer >  0) --memoryPointer;
