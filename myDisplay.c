@@ -189,6 +189,8 @@ void showFull() {
 	displayFlags();
 	displayMenu();
 	displayBigChar();
+	mt_gotoXY(24, 1);
+	bc_box(24, 1, 1, 2);
 	mt_gotoXY(23, 51);
 }
 
