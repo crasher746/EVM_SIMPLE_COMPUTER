@@ -52,7 +52,7 @@ int main() {
 					
 
 					if (key == KEY_STEP) {
-						
+						alarm(0);
 					}
 					if (!flag_key) {
 						if (key == KEY_RUN) {
