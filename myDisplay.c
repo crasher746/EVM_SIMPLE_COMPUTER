@@ -77,7 +77,7 @@ void displayFlags() {
 	printf("FLAGS");
 	mt_setfgColor(DEFAULT);
 	mt_gotoXY(11, 69);
-	int flagValue = 0;
+	int flagValue;
 
 	sc_regGet(WRONGCOMMAND, &flagValue); if (flagValue == 1) printf("WRNGCOM"); else printf("");
 	mt_gotoXY(11, 69);

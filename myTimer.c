@@ -29,6 +29,10 @@ void signalHandler(int signo) {
 		if ((sc_memoryGet(memoryPointer, &value) == 0) && (sc_commandDecode(value, &command, &operand) == 0)) {
 			memoryPointer++;
 		}
+		else {
+			sc_regSet(ISRUN, 0);
+			alarm(0);
+		}
 		showFull();
 	}
 	else {
